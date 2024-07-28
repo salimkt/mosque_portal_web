@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/static/css/main.ea015a76.css",
-    "main.js": "/static/js/main.30036b59.js",
-    "static/js/453.7dc41d74.chunk.js": "/static/js/453.7dc41d74.chunk.js",
-    "static/media/logo.png": "/static/media/logo.268076d614cae3df8ca1.png",
-    "index.html": "/index.html",
-    "main.ea015a76.css.map": "/static/css/main.ea015a76.css.map",
-    "main.30036b59.js.map": "/static/js/main.30036b59.js.map",
-    "453.7dc41d74.chunk.js.map": "/static/js/453.7dc41d74.chunk.js.map"
+    "main.css": "/mosque_portal_web/static/css/main.ea015a76.css",
+    "main.js": "/mosque_portal_web/static/js/main.b4443ab0.js",
+    "static/js/453.7dc41d74.chunk.js": "/mosque_portal_web/static/js/453.7dc41d74.chunk.js",
+    "static/media/logo.png": "/mosque_portal_web/static/media/logo.268076d614cae3df8ca1.png",
+    "index.html": "/mosque_portal_web/index.html",
+    "main.ea015a76.css.map": "/mosque_portal_web/static/css/main.ea015a76.css.map",
+    "main.b4443ab0.js.map": "/mosque_portal_web/static/js/main.b4443ab0.js.map",
+    "453.7dc41d74.chunk.js.map": "/mosque_portal_web/static/js/453.7dc41d74.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.ea015a76.css",
-    "static/js/main.30036b59.js"
+    "static/js/main.b4443ab0.js"
   ]
 }
