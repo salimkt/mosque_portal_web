@@ -66,7 +66,7 @@ export const Login = () => {
                         <Button
                             className={classes.submitButton}
                             type="button"
-                            href="signup"
+                            href="#/signup"
                             variant="outlined"
                             color="primary"
                             style={styles.btn}

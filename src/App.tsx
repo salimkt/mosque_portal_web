@@ -11,9 +11,7 @@ import RouterConfig from './navigation/router.config';
 const App = () => {
 
   return (
-    <Router>
-      <RouterConfig />
-    </Router>
+    <RouterConfig />
   );
 };
 

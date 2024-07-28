@@ -77,7 +77,7 @@ export const SignUp = () => {
                         <Button
                             className={classes.submitButton}
                             type="button"
-                            href="login"
+                            href="#"
                             variant="outlined"
                             color="primary"
                             style={styles.btn}
