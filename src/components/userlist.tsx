@@ -8,9 +8,11 @@ import {
   Paper,
   Box,
   Grid,
+  Button,
 } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
+import { useNavigate } from "react-router-dom";
 
 const useStyles = makeStyles((theme: any) => ({
   listContainer: {
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme: any) => ({
     justifyContent: "space-between",
   },
   itemText: {
-    flex: 1,
+    // flex: 1,
     padding: theme.spacing(0, 2),
     textAlign: "center",
   },
@@ -44,8 +46,11 @@ const useStyles = makeStyles((theme: any) => ({
   },
   gridItem: {
     display: "flex",
-    justifyContent: "center",
+    justifyContent: "flex-start",
     alignItems: "center",
+  },
+  button: {
+    // marginLeft: theme.spacing(2),
   },
 }));
 
@@ -76,14 +81,30 @@ const users = [
 export const UserList: React.FC = () => {
   const classes = useStyles();
 
+  const navigate = useNavigate();
   return (
-    <Paper
-      style={{ marginTop: 20, width: "100%" }}
-      className={classes.listContainer}
+    <div
+      // className={classes.listContainer}
+      style={{
+        // margin: 0,
+        display: "flex",
+        marginTop: 20,
+        // width: "100%",
+        flexDirection: "column",
+        alignSelf: "center",
+        // margin: 10,
+        flex: 1,
+        borderRadius: 5,
+      }}
     >
       <Box className={classes.header}>
         <Typography
-          style={{ display: "flex", flex: 1 }}
+          style={{
+            display: "flex",
+            flex: 1,
+            // backgroundColor: "red",
+            justifyContent: "flex-start",
+          }}
           className={classes.itemText}
           variant="body1"
         >
@@ -93,6 +114,7 @@ export const UserList: React.FC = () => {
           style={{
             display: "flex",
             flex: 2,
+            // backgroundColor: "green",
             justifyContent: "flex-start",
           }}
           className={classes.itemText}
@@ -101,7 +123,12 @@ export const UserList: React.FC = () => {
           Name
         </Typography>
         <Typography
-          style={{ display: "flex", flex: 1 }}
+          style={{
+            display: "flex",
+            flex: 1,
+            paddingLeft: 40,
+            // backgroundColor: "blue",
+          }}
           className={classes.itemText}
           variant="body1"
         >
@@ -116,67 +143,94 @@ export const UserList: React.FC = () => {
       <List>
         {users.map((user) => (
           <ListItem key={user.id} className={classes.listItem}>
-            <Grid container spacing={2}>
-              <Grid
-                style={{ display: "flex", flex: 1 }}
-                item
-                xs={3}
-                className={classes.gridItem}
-              >
-                <Typography className={classes.itemText} variant="body2">
-                  {user.registerNumber}
-                </Typography>
-              </Grid>
-              <Grid
+            <Grid
+              style={{ display: "flex", flex: 1 }}
+              item
+              xs={3}
+              // className={classes.gridItem}
+            >
+              <Typography className={classes.itemText} variant="body2">
+                {user.registerNumber}
+              </Typography>
+            </Grid>
+            <Grid
+              style={{
+                display: "flex",
+                flex: 2,
+                justifyContent: "flex-start",
+                // alignItems: "flex-start",
+                //   backgroundColor: "red",
+              }}
+              item
+              // xs={3}
+              className={classes.gridItem}
+            >
+              <Typography
                 style={{
-                  display: "flex",
-                  flex: 2,
-                  justifyContent: "flex-start",
-                  //   backgroundColor: "red",
+                  textAlign: "initial",
                 }}
-                item
-                xs={3}
-                className={classes.gridItem}
+                className={classes.itemText}
+                variant="body2"
               >
-                <Typography
-                  style={{
-                    alignItems: "flex-start",
-                    // backgroundColor: "blue",
-                  }}
-                  className={classes.itemText}
-                  variant="body2"
-                >
-                  {user.name}
-                </Typography>
-              </Grid>
-              <Grid
-                style={{ display: "flex", flex: 1 }}
-                item
-                xs={4}
-                className={classes.gridItem}
+                {user.name}
+              </Typography>
+            </Grid>
+            <Grid
+              style={{
+                display: "flex",
+                flex: 1,
+                justifyContent: "flex-start",
+              }}
+              item
+              // xs={4}
+              className={classes.gridItem}
+            >
+              <Typography
+                style={{
+                  textAlign: "initial",
+                }}
+                className={classes.itemText}
+                variant="body2"
               >
-                <Typography className={classes.itemText} variant="body2">
-                  {user.phone}
-                </Typography>
-              </Grid>
-              <Grid
-                style={{ display: "flex", flex: 1 }}
-                item
-                xs={2}
-                className={classes.gridItem}
+                {user.phone}
+              </Typography>
+            </Grid>
+            <Grid
+              style={{ display: "flex", flex: 1 }}
+              item
+              xs={2}
+              className={classes.gridItem}
+            >
+              <Button
+                style={{
+                  margin: 20,
+                  alignSelf: "center",
+                }}
+                onClick={() => {
+                  navigate("/");
+                }}
+                color="success"
+                className={classes.button}
               >
-                <IconButton
-                  edge="end"
-                  aria-label="edit"
-                  className={classes.iconButton}
-                >
-                  Edit
-                </IconButton>
-              </Grid>
+                Edit
+              </Button>
             </Grid>
           </ListItem>
         ))}
       </List>
-    </Paper>
+      <Button
+        style={{
+          margin: 20,
+          alignSelf: "center",
+        }}
+        onClick={() => {
+          navigate("/userform");
+        }}
+        color="success"
+        className={classes.button}
+      >
+        Add More People
+      </Button>
+    </div>
   );
 };
