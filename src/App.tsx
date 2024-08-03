@@ -1,17 +1,13 @@
 // src/App.tsx
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { Container, Typography, Box, Button } from '@mui/material';
-import { makeStyles } from '@mui/styles';
-import { SignUp } from './screens/signup';
-import RouterConfig from './navigation/router.config';
-
-
+import { Provider } from "react-redux";
+import RouterConfig from "./navigation/router.config";
+import { store } from "./toolkit/store";
 
 const App = () => {
-
   return (
-    <RouterConfig />
+    <Provider store={store}>
+      <RouterConfig />
+    </Provider>
   );
 };
 
