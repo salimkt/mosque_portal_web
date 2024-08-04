@@ -13,6 +13,8 @@ import {
 
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
+//@ts-ignore
+import html2pdf from "html2pdf.js";
 
 const useStyles = makeStyles((theme: any) => ({
   listContainer: {
@@ -82,8 +84,20 @@ export const UserList: React.FC = () => {
   const classes = useStyles();
 
   const navigate = useNavigate();
+  function generatePDF() {
+    const element = document.getElementById("userlist");
+    const opt = {
+      margin: [0, 0, 0, 0], // Top, right, bottom, left
+      filename: "document.pdf",
+      image: { type: "jpeg", quality: 1 },
+      html2canvas: { scale: 5 },
+      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+    };
+    html2pdf().from(element).set(opt).save();
+  }
   return (
     <div
+      id="userlist"
       // className={classes.listContainer}
       style={{
         // margin: 0,
@@ -218,19 +232,43 @@ export const UserList: React.FC = () => {
           </ListItem>
         ))}
       </List>
-      <Button
+      <div
         style={{
-          margin: 20,
-          alignSelf: "center",
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
         }}
-        onClick={() => {
-          navigate("/userform");
-        }}
-        color="success"
-        className={classes.button}
       >
-        Add More People
-      </Button>
+        <Button
+          style={{
+            margin: 20,
+            alignSelf: "center",
+          }}
+          onClick={() => {
+            // navigate("/userform");
+            generatePDF();
+          }}
+          color="success"
+          className={classes.button}
+        >
+          Print
+        </Button>
+        <Button
+          style={{
+            margin: 20,
+            alignSelf: "center",
+          }}
+          onClick={() => {
+            navigate("/userform");
+            // generatePDF();
+          }}
+          color="success"
+          className={classes.button}
+        >
+          Add More People
+        </Button>
+      </div>
     </div>
   );
 };
