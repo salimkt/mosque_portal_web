@@ -2,11 +2,13 @@
 import { Provider } from "react-redux";
 import RouterConfig from "./navigation/router.config";
 import { store } from "./toolkit/store";
+import { AlertModal } from "./components/alert";
 
 const App = () => {
   return (
     <Provider store={store}>
       <RouterConfig />
+      <AlertModal />
     </Provider>
   );
 };

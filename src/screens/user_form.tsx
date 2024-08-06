@@ -10,10 +10,11 @@ import {
   Paper,
   ThemeProvider,
 } from "@mui/material";
-
+import * as actions from "../toolkit/reducers";
 import { makeStyles } from "@mui/styles";
 import Header from "../components/header";
 import { theme } from "../utils/styles";
+import { useAppDispatch } from "../toolkit/store";
 const useStyles = makeStyles((theme: any) => ({
   formContainer: {
     width: "100%",
@@ -40,7 +41,7 @@ const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
 export const UserForm: React.FC = () => {
   const classes = useStyles();
-
+  const dispach = useAppDispatch();
   // State for form fields
   const [formData, setFormData] = useState({
     registerNumber: "",
@@ -71,6 +72,22 @@ export const UserForm: React.FC = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log(formData);
+    dispach(
+      actions.setAlert({
+        visible: true,
+        message: "Registration success!",
+        mode: "Alert",
+      })
+    );
+    setTimeout(() => {
+      dispach(
+        actions.setAlert({
+          visible: false,
+          message: "",
+          mode: "",
+        })
+      );
+    }, 1500);
     // Here you would typically handle form submission, such as sending data to a server
   };
 
@@ -94,7 +111,7 @@ export const UserForm: React.FC = () => {
               value={formData.registerNumber}
               onChange={handleChange}
               className={classes.field}
-              required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -105,7 +122,7 @@ export const UserForm: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               className={classes.field}
-              required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -179,7 +196,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               type="tel"
               className={classes.field}
-              required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -191,7 +208,7 @@ export const UserForm: React.FC = () => {
               value={formData.bloodGroup}
               onChange={handleChange}
               className={classes.field}
-              required
+              // required
             >
               {bloodGroups.map((group) => (
                 <MenuItem key={group} value={group}>

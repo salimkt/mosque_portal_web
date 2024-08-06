@@ -15,6 +15,7 @@ import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 //@ts-ignore
 import html2pdf from "html2pdf.js";
+import { useAppSelector } from "../toolkit/store";
 
 const useStyles = makeStyles((theme: any) => ({
   listContainer: {
@@ -56,33 +57,54 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-const users = [
-  { id: 1, registerNumber: "1234", name: "John Doe", phone: "123-456-7890" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
-  { id: 2, registerNumber: "5678", name: "Jane Smith", phone: "098-765-4321" },
+export const users = [
   {
-    id: 3,
-    registerNumber: "9101",
+    id: 1,
+    registerNumber: "1234",
+    name: "John Doe",
+    houseName: "",
+    fathersName: "",
+    occupation: "",
+    maleMembers: "",
+    femaleMembers: "",
+    area: "",
+    mobileNumber: "123-456-7890",
+    bloodGroup: "",
+    rationCardNumber: "",
+  },
+  {
+    id: 1,
+    registerNumber: "1234",
+    name: "Jane Smith",
+    houseName: "",
+    fathersName: "",
+    occupation: "",
+    maleMembers: "",
+    femaleMembers: "",
+    area: "",
+    mobileNumber: "123-456-7890",
+    bloodGroup: "",
+    rationCardNumber: "",
+  },
+  {
+    id: 1,
+    registerNumber: "1234",
     name: "Alice Johnson",
-    phone: "555-123-4567",
+    houseName: "",
+    fathersName: "",
+    occupation: "",
+    maleMembers: "",
+    femaleMembers: "",
+    area: "",
+    mobileNumber: "123-456-7890",
+    bloodGroup: "",
+    rationCardNumber: "",
   },
 ];
 
 export const UserList: React.FC = () => {
   const classes = useStyles();
-
+  const userlist = useAppSelector((state) => state.main.userlist);
   const navigate = useNavigate();
   function generatePDF() {
     const element = document.getElementById("userlist");
@@ -111,6 +133,43 @@ export const UserList: React.FC = () => {
         borderRadius: 5,
       }}
     >
+      <div
+        style={{
+          flexDirection: "row",
+          width: "100%",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button
+          style={{
+            margin: 20,
+            alignSelf: "center",
+          }}
+          onClick={() => {
+            // navigate("/userform");
+            generatePDF();
+          }}
+          color="success"
+          className={classes.button}
+        >
+          Print
+        </Button>
+        <Button
+          style={{
+            margin: 20,
+            alignSelf: "center",
+          }}
+          onClick={() => {
+            navigate("/userform");
+            // generatePDF();
+          }}
+          color="success"
+          className={classes.button}
+        >
+          Add More People
+        </Button>
+      </div>
       <Box className={classes.header}>
         <Typography
           style={{
@@ -154,9 +213,10 @@ export const UserList: React.FC = () => {
           variant="body1"
         ></Typography>
       </Box>
+
       <List>
-        {users.map((user) => (
-          <ListItem key={user.id} className={classes.listItem}>
+        {userlist.map((user) => (
+          <ListItem className={classes.listItem}>
             <Grid
               style={{ display: "flex", flex: 1 }}
               item
@@ -206,7 +266,7 @@ export const UserList: React.FC = () => {
                 className={classes.itemText}
                 variant="body2"
               >
-                {user.phone}
+                {user.mobileNumber}
               </Typography>
             </Grid>
             <Grid
@@ -232,43 +292,6 @@ export const UserList: React.FC = () => {
           </ListItem>
         ))}
       </List>
-      <div
-        style={{
-          flexDirection: "row",
-          width: "100%",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Button
-          style={{
-            margin: 20,
-            alignSelf: "center",
-          }}
-          onClick={() => {
-            // navigate("/userform");
-            generatePDF();
-          }}
-          color="success"
-          className={classes.button}
-        >
-          Print
-        </Button>
-        <Button
-          style={{
-            margin: 20,
-            alignSelf: "center",
-          }}
-          onClick={() => {
-            navigate("/userform");
-            // generatePDF();
-          }}
-          color="success"
-          className={classes.button}
-        >
-          Add More People
-        </Button>
-      </div>
     </div>
   );
 };
