@@ -1,5 +1,4 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
-import { users } from "../../components/userlist";
 const initialstate = {
   alert: {
     visible: false,
@@ -8,7 +7,50 @@ const initialstate = {
     // button1: {name: '', callback: () => {}},
     // button2: { name: "", callback: () => {} },
   },
-  userlist: users,
+  userlist: [
+    {
+      id: 1,
+      registerNumber: "1234",
+      name: "John Doe",
+      houseName: "",
+      fathersName: "",
+      occupation: "",
+      maleMembers: "",
+      femaleMembers: "",
+      area: "",
+      mobileNumber: "123-456-7890",
+      bloodGroup: "",
+      rationCardNumber: "",
+    },
+    {
+      id: 1,
+      registerNumber: "1234",
+      name: "Jane Smith",
+      houseName: "",
+      fathersName: "",
+      occupation: "",
+      maleMembers: "",
+      femaleMembers: "",
+      area: "",
+      mobileNumber: "123-456-7890",
+      bloodGroup: "",
+      rationCardNumber: "",
+    },
+    {
+      id: 1,
+      registerNumber: "1234",
+      name: "Alice Johnson",
+      houseName: "",
+      fathersName: "",
+      occupation: "",
+      maleMembers: "",
+      femaleMembers: "",
+      area: "",
+      mobileNumber: "123-456-7890",
+      bloodGroup: "",
+      rationCardNumber: "",
+    },
+  ],
 };
 export const MainSlice = createSlice({
   name: "main",

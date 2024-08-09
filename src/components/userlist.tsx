@@ -57,54 +57,10 @@ const useStyles = makeStyles((theme: any) => ({
   },
 }));
 
-export const users = [
-  {
-    id: 1,
-    registerNumber: "1234",
-    name: "John Doe",
-    houseName: "",
-    fathersName: "",
-    occupation: "",
-    maleMembers: "",
-    femaleMembers: "",
-    area: "",
-    mobileNumber: "123-456-7890",
-    bloodGroup: "",
-    rationCardNumber: "",
-  },
-  {
-    id: 1,
-    registerNumber: "1234",
-    name: "Jane Smith",
-    houseName: "",
-    fathersName: "",
-    occupation: "",
-    maleMembers: "",
-    femaleMembers: "",
-    area: "",
-    mobileNumber: "123-456-7890",
-    bloodGroup: "",
-    rationCardNumber: "",
-  },
-  {
-    id: 1,
-    registerNumber: "1234",
-    name: "Alice Johnson",
-    houseName: "",
-    fathersName: "",
-    occupation: "",
-    maleMembers: "",
-    femaleMembers: "",
-    area: "",
-    mobileNumber: "123-456-7890",
-    bloodGroup: "",
-    rationCardNumber: "",
-  },
-];
 
 export const UserList: React.FC = () => {
   const classes = useStyles();
-  const userlist = useAppSelector((state) => state.main.userlist);
+  const userlist: any = useAppSelector((state) => state.main.userlist);
   const navigate = useNavigate();
   function generatePDF() {
     const element = document.getElementById("userlist");
@@ -215,13 +171,13 @@ export const UserList: React.FC = () => {
       </Box>
 
       <List>
-        {userlist.map((user) => (
+        {userlist.map((user: any) => (
           <ListItem className={classes.listItem}>
             <Grid
               style={{ display: "flex", flex: 1 }}
               item
               xs={3}
-              // className={classes.gridItem}
+            // className={classes.gridItem}
             >
               <Typography className={classes.itemText} variant="body2">
                 {user.registerNumber}

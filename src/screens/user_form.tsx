@@ -7,8 +7,8 @@ import {
   Box,
   MenuItem,
   Typography,
-  Paper,
   ThemeProvider,
+  Autocomplete,
 } from "@mui/material";
 import * as actions from "../toolkit/reducers";
 import { makeStyles } from "@mui/styles";
@@ -38,6 +38,8 @@ const useStyles = makeStyles((theme: any) => ({
 }));
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
+
+const HouseNames = ['Sunrise Villa', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Ocean Breeze'];
 
 export const UserForm: React.FC = () => {
   const classes = useStyles();
@@ -111,7 +113,7 @@ export const UserForm: React.FC = () => {
               value={formData.registerNumber}
               onChange={handleChange}
               className={classes.field}
-              // required
+            // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -122,18 +124,28 @@ export const UserForm: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               className={classes.field}
-              // required
+            // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
-            <TextField
+            <Autocomplete
+              options={HouseNames}
+              getOptionLabel={(option) => option}
+              renderInput={(params) => (
+                <TextField {...params} label="House Name" fullWidth />
+              )}
+              onChange={(event, newValue) => {
+                setFormData({ ...formData, houseName: newValue ? newValue : '' });
+              }}
+            />
+            {/* <TextField
               fullWidth
               label="House Name"
               name="houseName"
               value={formData.houseName}
               onChange={handleChange}
               className={classes.field}
-            />
+            /> */}
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
@@ -196,7 +208,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               type="tel"
               className={classes.field}
-              // required
+            // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -208,7 +220,7 @@ export const UserForm: React.FC = () => {
               value={formData.bloodGroup}
               onChange={handleChange}
               className={classes.field}
-              // required
+            // required
             >
               {bloodGroups.map((group) => (
                 <MenuItem key={group} value={group}>

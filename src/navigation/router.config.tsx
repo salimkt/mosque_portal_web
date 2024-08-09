@@ -13,6 +13,7 @@ import { makeStyles } from "@mui/styles";
 import { Login } from "../screens/login";
 import { Dashboard } from "../screens/dashbord";
 import { UserForm } from "../screens/user_form";
+import CardGrid from "../screens/cards";
 // import { Home } from "../App";
 // const SignUp = React.lazy(() => import("../screens/signup"))
 
@@ -36,6 +37,10 @@ const router = createHashRouter([
       {
         path: "/userform",
         element: <UserForm />,
+      },
+      {
+        path: "/cards",
+        element: <CardGrid />,
       },
     ],
   },
