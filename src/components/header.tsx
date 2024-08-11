@@ -33,6 +33,8 @@ const Header: React.FC = () => {
         backgroundColor: "#fff",
         borderBottomLeftRadius: 5,
         borderBottomRightRadius: 5,
+        height: 60,
+        marginBottom: 10,
       }}
       position="static"
       className={classes.appBar}

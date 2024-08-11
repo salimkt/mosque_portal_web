@@ -3,12 +3,16 @@ import { Provider } from "react-redux";
 import RouterConfig from "./navigation/router.config";
 import { store } from "./toolkit/store";
 import { AlertModal } from "./components/alert";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "./utils/styles";
 
 const App = () => {
   return (
     <Provider store={store}>
-      <RouterConfig />
-      <AlertModal />
+      <ThemeProvider theme={theme}>
+        <RouterConfig />
+        <AlertModal />
+      </ThemeProvider>
     </Provider>
   );
 };

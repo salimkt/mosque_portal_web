@@ -13,8 +13,6 @@ import {
 
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-//@ts-ignore
-import html2pdf from "html2pdf.js";
 import { useAppSelector } from "../toolkit/store";
 
 const useStyles = makeStyles((theme: any) => ({
@@ -62,17 +60,7 @@ export const UserList: React.FC = () => {
   const classes = useStyles();
   const userlist: any = useAppSelector((state) => state.main.userlist);
   const navigate = useNavigate();
-  function generatePDF() {
-    const element = document.getElementById("userlist");
-    const opt = {
-      margin: [0, 0, 0, 0], // Top, right, bottom, left
-      filename: "document.pdf",
-      image: { type: "jpeg", quality: 1 },
-      html2canvas: { scale: 5 },
-      jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-    };
-    html2pdf().from(element).set(opt).save();
-  }
+
   return (
     <div
       id="userlist"
@@ -103,8 +91,8 @@ export const UserList: React.FC = () => {
             alignSelf: "center",
           }}
           onClick={() => {
-            // navigate("/userform");
-            generatePDF();
+            navigate("/cards");
+            // generatePDF();
           }}
           color="success"
           className={classes.button}
