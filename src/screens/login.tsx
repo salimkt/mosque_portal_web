@@ -3,16 +3,21 @@ import { TextField, Button, Container, Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, useStyles } from "../utils/styles";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../utils/api_utils";
+import { useAppDispatch } from "../toolkit/store";
+import * as actions from "../toolkit/reducers";
 
 export const Login = () => {
   const classes = useStyles();
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-
+  const [isError, setIsError] = useState(false);
   const handleChange = (e: { target: { name: any; value: any } }) => {
+    isError && setIsError(false);
     setFormData({
       ...formData,
       [e.target.name]: e.target.value,
@@ -22,7 +27,25 @@ export const Login = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log("Form Data:", formData);
-    navigate("/dashboard");
+    loginUser(formData)
+      .then((res) => {
+        console.log(res);
+        navigate("/dashboard");
+      })
+      .catch((er) => {
+        console.log("errr", er);
+        dispatch(
+          actions.setAlert({
+            visible: true,
+            message: "Invalid username or password!",
+            mode: "error",
+          })
+        );
+        setIsError(true);
+      })
+      .finally(() => {
+        console.log("errr");
+      });
   };
 
   return (
@@ -42,6 +65,7 @@ export const Login = () => {
               style={styles.textInput}
               name="email"
               value={formData.email}
+              error={isError}
               onChange={handleChange}
             />
             <TextField
@@ -53,6 +77,7 @@ export const Login = () => {
               style={styles.textInput}
               name="password"
               value={formData.password}
+              error={isError}
               onChange={handleChange}
             />
             <Button

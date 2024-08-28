@@ -39,7 +39,18 @@ const useStyles = makeStyles((theme: any) => ({
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-const HouseNames = ['Sunrise Villa', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Maple House', 'Ocean Breeze'];
+const HouseNames = [
+  "Sunrise Villa",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Maple House",
+  "Ocean Breeze",
+];
 
 export const UserForm: React.FC = () => {
   const classes = useStyles();
@@ -78,7 +89,7 @@ export const UserForm: React.FC = () => {
       actions.setAlert({
         visible: true,
         message: "Registration success!",
-        mode: "Alert",
+        mode: "success",
       })
     );
     setTimeout(() => {
@@ -86,7 +97,7 @@ export const UserForm: React.FC = () => {
         actions.setAlert({
           visible: false,
           message: "",
-          mode: "",
+          mode: "info",
         })
       );
     }, 1500);
@@ -113,7 +124,7 @@ export const UserForm: React.FC = () => {
               value={formData.registerNumber}
               onChange={handleChange}
               className={classes.field}
-            // required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -124,7 +135,7 @@ export const UserForm: React.FC = () => {
               value={formData.name}
               onChange={handleChange}
               className={classes.field}
-            // required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -135,7 +146,10 @@ export const UserForm: React.FC = () => {
                 <TextField {...params} label="House Name" fullWidth />
               )}
               onChange={(event, newValue) => {
-                setFormData({ ...formData, houseName: newValue ? newValue : '' });
+                setFormData({
+                  ...formData,
+                  houseName: newValue ? newValue : "",
+                });
               }}
             />
             {/* <TextField
@@ -208,7 +222,7 @@ export const UserForm: React.FC = () => {
               onChange={handleChange}
               type="tel"
               className={classes.field}
-            // required
+              // required
             />
           </Grid>
           <Grid item xs={12} sm={6}>
@@ -220,7 +234,7 @@ export const UserForm: React.FC = () => {
               value={formData.bloodGroup}
               onChange={handleChange}
               className={classes.field}
-            // required
+              // required
             >
               {bloodGroups.map((group) => (
                 <MenuItem key={group} value={group}>

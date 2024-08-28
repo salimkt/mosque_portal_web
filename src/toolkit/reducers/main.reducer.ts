@@ -1,4 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { AlertProps } from "@mui/material";
+
 const initialstate = {
   alert: {
     visible: false,
@@ -52,14 +54,21 @@ const initialstate = {
     },
   ],
 };
+
+export interface alert_payload {
+  visible: boolean;
+  mode: AlertProps["severity"];
+  message: string;
+}
 export const MainSlice = createSlice({
   name: "main",
   initialState: initialstate,
   reducers: {
     setAlert: (
       state: typeof initialstate,
-      action: PayloadAction<(typeof initialstate)["alert"]>
+      action: PayloadAction<alert_payload>
     ) => {
+      //@ts-ignore
       state.alert = action.payload;
     },
   },
