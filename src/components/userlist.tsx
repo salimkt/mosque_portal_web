@@ -1,19 +1,11 @@
 // src/UserList.tsx
 import React from "react";
-import {
-  List,
-  ListItem,
-  Typography,
-  IconButton,
-  Paper,
-  Box,
-  Grid,
-  Button,
-} from "@mui/material";
+import { List, ListItem, Typography, Box, Grid, Button } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "../toolkit/store";
+import { handleEdit } from "../utils/functions";
 
 const useStyles = makeStyles((theme: any) => ({
   listContainer: {
@@ -54,7 +46,6 @@ const useStyles = makeStyles((theme: any) => ({
     // marginLeft: theme.spacing(2),
   },
 }));
-
 
 export const UserList: React.FC = () => {
   const classes = useStyles();
@@ -159,16 +150,16 @@ export const UserList: React.FC = () => {
       </Box>
 
       <List>
-        {userlist.map((user: any) => (
+        {userlist.map((user: any, index: number) => (
           <ListItem className={classes.listItem}>
             <Grid
               style={{ display: "flex", flex: 1 }}
               item
               xs={3}
-            // className={classes.gridItem}
+              // className={classes.gridItem}
             >
               <Typography className={classes.itemText} variant="body2">
-                {user.registerNumber}
+                {user.register_number}
               </Typography>
             </Grid>
             <Grid
@@ -210,7 +201,7 @@ export const UserList: React.FC = () => {
                 className={classes.itemText}
                 variant="body2"
               >
-                {user.mobileNumber}
+                {user.mobile_number}
               </Typography>
             </Grid>
             <Grid
@@ -225,7 +216,7 @@ export const UserList: React.FC = () => {
                   alignSelf: "center",
                 }}
                 onClick={() => {
-                  navigate("/");
+                  handleEdit(user, navigate);
                 }}
                 color="success"
                 className={classes.button}

@@ -1,5 +1,5 @@
 // src/DetailedForm.tsx
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   TextField,
   Button,
@@ -14,7 +14,9 @@ import * as actions from "../toolkit/reducers";
 import { makeStyles } from "@mui/styles";
 import Header from "../components/header";
 import { theme } from "../utils/styles";
-import { useAppDispatch } from "../toolkit/store";
+import { store, useAppDispatch, useAppSelector } from "../toolkit/store";
+import { addPeople, updateMemberData } from "../utils/api_utils";
+import { useNavigate } from "react-router-dom";
 const useStyles = makeStyles((theme: any) => ({
   formContainer: {
     width: "100%",
@@ -39,68 +41,91 @@ const useStyles = makeStyles((theme: any) => ({
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 
-const HouseNames = [
-  "Sunrise Villa",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Maple House",
-  "Ocean Breeze",
-];
+const defaultform = {
+  register_number: "",
+  name: "",
+  house_name: "",
+  fathers_name: "",
+  occupation: "",
+  male_members: 0,
+  female_members: 0,
+  area: "",
+  mobile_number: "",
+  blood_group: "",
+  ration_card_number: "",
+};
 
 export const UserForm: React.FC = () => {
   const classes = useStyles();
   const dispach = useAppDispatch();
+  const navigate = useNavigate();
   // State for form fields
-  const [formData, setFormData] = useState({
-    registerNumber: "",
-    name: "",
-    houseName: "",
-    fathersName: "",
-    occupation: "",
-    maleMembers: "",
-    femaleMembers: "",
-    area: "",
-    mobileNumber: "",
-    bloodGroup: "",
-    rationCardNumber: "",
-  });
+  const formData = useAppSelector((state) => state.main.formdata);
+  const house_names: any = useAppSelector((state) => state.main.house_names);
 
   // Handle input changes
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
+    dispach(
+      actions.setFormData({
+        ...formData,
+        [name]: value,
+      })
+    );
   };
-
   // Handle form submission
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(formData);
-    dispach(
-      actions.setAlert({
-        visible: true,
-        message: "Registration success!",
-        mode: "success",
-      })
-    );
-    setTimeout(() => {
-      dispach(
-        actions.setAlert({
-          visible: false,
-          message: "",
-          mode: "info",
-        })
-      );
-    }, 1500);
+    console.log("formData", formData);
+    store.getState().flags.editing
+      ? updateMemberData(formData)
+          .then((res) => {
+            dispach(
+              actions.setAlert({
+                visible: true,
+                message: "Updation success!",
+                mode: "success",
+              })
+            );
+            dispach(actions.setFormData(defaultform));
+            dispach(actions.setEditing(false));
+            navigate("/dashboard");
+          })
+          .catch((err) => {
+            dispach(
+              actions.setAlert({
+                visible: true,
+                message: "Updation failed!",
+                mode: "error",
+              })
+            );
+          })
+      : addPeople(formData)
+          .then((res) => {
+            dispach(
+              actions.setAlert({
+                visible: true,
+                message: "Registration success!",
+                mode: "success",
+              })
+            );
+            const members = store.getState().main.userlist;
+            members.push({ ...formData, id: 0 });
+            store.dispatch(actions.setMembers({ ...members, id: "" }));
+            dispach(actions.setFormData(defaultform));
+          })
+          .catch((err) => {
+            dispach(
+              actions.setAlert({
+                visible: true,
+                message: "Registration failed!",
+                mode: "error",
+              })
+            );
+          });
+
     // Here you would typically handle form submission, such as sending data to a server
   };
 
@@ -119,9 +144,10 @@ export const UserForm: React.FC = () => {
           <Grid item xs={12} sm={6}>
             <TextField
               fullWidth
+              disabled={store.getState().flags.editing}
               label="Register Number"
-              name="registerNumber"
-              value={formData.registerNumber}
+              name="register_number"
+              value={formData.register_number}
               onChange={handleChange}
               className={classes.field}
               // required
@@ -140,16 +166,35 @@ export const UserForm: React.FC = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <Autocomplete
-              options={HouseNames}
+              freeSolo
+              options={house_names}
               getOptionLabel={(option) => option}
+              value={formData.house_name}
               renderInput={(params) => (
-                <TextField {...params} label="House Name" fullWidth />
+                <TextField
+                  {...params}
+                  value={formData.house_name}
+                  onChange={(event) => {
+                    event.preventDefault();
+                    dispach(
+                      actions.setFormData({
+                        ...formData,
+                        house_name: event.target.value,
+                      })
+                    );
+                  }}
+                  {...params}
+                  label="House Name"
+                  fullWidth
+                />
               )}
               onChange={(event, newValue) => {
-                setFormData({
-                  ...formData,
-                  houseName: newValue ? newValue : "",
-                });
+                dispach(
+                  actions.setFormData({
+                    ...formData,
+                    house_name: newValue ? newValue : "",
+                  })
+                );
               }}
             />
             {/* <TextField
@@ -165,8 +210,8 @@ export const UserForm: React.FC = () => {
             <TextField
               fullWidth
               label="Father's Name"
-              name="fathersName"
-              value={formData.fathersName}
+              name="fathers_name"
+              value={formData.fathers_name}
               onChange={handleChange}
               className={classes.field}
             />
@@ -185,8 +230,8 @@ export const UserForm: React.FC = () => {
             <TextField
               fullWidth
               label="Male Members"
-              name="maleMembers"
-              value={formData.maleMembers}
+              name="male_members"
+              value={formData.male_members}
               onChange={handleChange}
               type="number"
               className={classes.field}
@@ -196,8 +241,8 @@ export const UserForm: React.FC = () => {
             <TextField
               fullWidth
               label="Female Members"
-              name="femaleMembers"
-              value={formData.femaleMembers}
+              name="female_members"
+              value={formData.female_members}
               onChange={handleChange}
               type="number"
               className={classes.field}
@@ -217,8 +262,8 @@ export const UserForm: React.FC = () => {
             <TextField
               fullWidth
               label="Mobile Number"
-              name="mobileNumber"
-              value={formData.mobileNumber}
+              name="mobile_number"
+              value={formData.mobile_number}
               onChange={handleChange}
               type="tel"
               className={classes.field}
@@ -230,8 +275,8 @@ export const UserForm: React.FC = () => {
               select
               fullWidth
               label="Blood Group"
-              name="bloodGroup"
-              value={formData.bloodGroup}
+              name="blood_group"
+              value={formData.blood_group}
               onChange={handleChange}
               className={classes.field}
               // required
@@ -247,8 +292,8 @@ export const UserForm: React.FC = () => {
             <TextField
               fullWidth
               label="Ration Card Number"
-              name="rationCardNumber"
-              value={formData.rationCardNumber}
+              name="ration_card_number"
+              value={formData.ration_card_number}
               onChange={handleChange}
               className={classes.field}
             />
@@ -265,7 +310,7 @@ export const UserForm: React.FC = () => {
             variant="contained"
             color="primary"
           >
-            Register
+            {store.getState().flags.editing ? "Submit" : "Register"}
           </Button>
         </Box>
       </form>
