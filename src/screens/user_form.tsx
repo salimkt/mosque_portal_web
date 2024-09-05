@@ -112,6 +112,7 @@ export const UserForm: React.FC = () => {
               })
             );
             const members = store.getState().main.userlist;
+            //@ts-ignore
             members.push({ ...formData, id: 0 });
             store.dispatch(actions.setMembers({ ...members, id: "" }));
             dispach(actions.setFormData(defaultform));

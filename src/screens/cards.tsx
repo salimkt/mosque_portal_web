@@ -5,6 +5,7 @@ import { makeStyles } from "@mui/styles";
 import Header from "../components/header";
 //@ts-ignore
 import html2pdf from "html2pdf.js";
+import { useAppSelector } from "../toolkit/store";
 
 const useStyles = makeStyles((theme) => ({
   pageContainer: {
@@ -78,6 +79,7 @@ const users = [
 
 const CardGrid: React.FC = () => {
   const classes = useStyles();
+  const people: any = useAppSelector((state) => state.main.userlist);
   function generatePDF() {
     const element = document.getElementById("tokens");
     const opt = {
@@ -131,7 +133,7 @@ const CardGrid: React.FC = () => {
             justifyContent: "space-between",
           }}
         >
-          {users.map((user) => (
+          {people.map((user: any, index: number) => (
             <div
               style={{
                 width: "49.96%",
@@ -148,10 +150,10 @@ const CardGrid: React.FC = () => {
               }}
             >
               <Typography variant="h6" className={classes.name}>
-                Name: {user.name}
+                Name: {user?.name}
               </Typography>
               <Typography variant="body1" className={classes.token}>
-                Token: {user.token}
+                Token: {1000 + index}
               </Typography>
             </div>
           ))}
