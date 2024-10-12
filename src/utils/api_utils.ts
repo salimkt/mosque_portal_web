@@ -6,7 +6,7 @@ const API_ROOT = "https://hisbe-production.up.railway.app/api/";
 export const loginUser = async (cred: { email: string; password: string }) => {
   console.log("Login______");
 
-  return await axios.post(API_ROOT + "api-token-auth/", {
+  return await axios.post(API_ROOT + "token", {
     username: cred.email,
     password: cred.password,
   });
@@ -35,4 +35,11 @@ export const updateMemberData = async (member: memberType) => {
     API_ROOT + "people/update/" + member.register_number + "/",
     member
   );
+};
+
+export const setToken = (token: string) => {
+  axios.defaults["headers"].post = { Authorization: "Bearer " + token };
+  axios.defaults["headers"].get = { Authorization: "Bearer " + token };
+  axios.defaults["headers"].put = { Authorization: "Bearer " + token };
+  axios.defaults["headers"].delete = { Authorization: "Bearer " + token };
 };

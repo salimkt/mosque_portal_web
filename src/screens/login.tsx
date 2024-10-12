@@ -3,7 +3,7 @@ import { TextField, Button, Container, Box } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, useStyles } from "../utils/styles";
 import { useNavigate } from "react-router-dom";
-import { getMembers, loginUser } from "../utils/api_utils";
+import { getMembers, loginUser, setToken } from "../utils/api_utils";
 import { useAppDispatch } from "../toolkit/store";
 import * as actions from "../toolkit/reducers";
 import { memberType } from "../utils/types";
@@ -33,10 +33,12 @@ export const Login = () => {
       .then((res) => {
         console.log(res);
         navigate("/dashboard");
-        getMembers().then((res) => {
-          dispatch(actions.setMembers(res.data));
-          dispatch(actions.setHouseNames(getHouseNames(res.data)));
-        });
+        localStorage.setItem("authToken", res.data.access);
+        setToken(res.data.access);
+        // getMembers().then((res) => {
+        //   dispatch(actions.setMembers(res.data));
+        //   dispatch(actions.setHouseNames(getHouseNames(res.data)));
+        // });
       })
       .catch((er) => {
         console.log("errr", er);
