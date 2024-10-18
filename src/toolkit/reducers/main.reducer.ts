@@ -14,17 +14,15 @@ const initialstate = {
   formdata: {
     register_number: "",
     name: "",
-    house_name: "",
-    fathers_name: "",
-    occupation: "",
-    male_members: 0,
-    female_members: 0,
-    area: "",
-    mobile_number: "",
+    mobile: "",
+    dob: "",
+    father: "",
+    house: 0,
+    area: 0,
     blood_group: "",
-    ration_card_number: "",
   },
   house_names: [""],
+  area_names: [""],
 };
 
 export interface alert_payload {
@@ -59,8 +57,19 @@ export const MainSlice = createSlice({
     ) => {
       state.house_names = action.payload;
     },
+    setAreaNames: (
+      state: typeof initialstate,
+      action: PayloadAction<string[]>
+    ) => {
+      state.area_names = action.payload;
+    },
   },
 });
-export const { setAlert, setMembers, setFormData, setHouseNames } =
-  MainSlice.actions;
+export const {
+  setAlert,
+  setMembers,
+  setFormData,
+  setHouseNames,
+  setAreaNames,
+} = MainSlice.actions;
 export default MainSlice.reducer;

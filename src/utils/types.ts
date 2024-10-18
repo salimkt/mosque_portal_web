@@ -1,13 +1,11 @@
 export interface memberType {
   register_number: string;
   name: string;
-  house_name: string;
-  fathers_name: string;
-  occupation: string;
-  male_members: number;
-  female_members: number;
-  area: string;
-  mobile_number: string;
+  mobile: string;
+  dob: string;
+  father: string;
+  house: number;
+  area: number;
   blood_group: string;
-  ration_card_number: string;
+  dependents?: any[];
 }

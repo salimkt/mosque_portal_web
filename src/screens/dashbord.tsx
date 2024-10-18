@@ -1,9 +1,12 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TextField, Button, Container, Box, Typography } from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, useStyles } from "../utils/styles";
 import Header from "../components/header";
 import { UserList } from "../components/userlist";
+import { getAreaNames, getHouseNames, getMembers } from "../utils/api_utils";
+import { store } from "../toolkit/store";
+import { setHouseNames, setAreaNames, setMembers } from "../toolkit/reducers";
 
 export const Dashboard = () => {
   const classes = useStyles();

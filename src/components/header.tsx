@@ -1,5 +1,5 @@
 // src/Header.tsx
-import React from "react";
+import React, { memo } from "react";
 import { AppBar, Toolbar, Typography, Button, IconButton } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
@@ -66,4 +66,4 @@ const Header: React.FC = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

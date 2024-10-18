@@ -1,12 +1,11 @@
 // src/UserList.tsx
-import React from "react";
+import React, { useEffect } from "react";
 import { List, ListItem, Typography, Box, Grid, Button } from "@mui/material";
 
 import { makeStyles } from "@mui/styles";
 import { useNavigate } from "react-router-dom";
-import { useAppSelector } from "../toolkit/store";
+import { store, useAppSelector } from "../toolkit/store";
 import { handleEdit } from "../utils/functions";
-
 const useStyles = makeStyles((theme: any) => ({
   listContainer: {
     width: "100%",
@@ -51,6 +50,7 @@ export const UserList: React.FC = () => {
   const classes = useStyles();
   const userlist: any = useAppSelector((state) => state.main.userlist);
   const navigate = useNavigate();
+  useEffect(() => {}, []);
 
   return (
     <div
@@ -102,7 +102,7 @@ export const UserList: React.FC = () => {
           color="success"
           className={classes.button}
         >
-          Add More People
+          Add Member
         </Button>
       </div>
       <Box className={classes.header}>
@@ -201,7 +201,7 @@ export const UserList: React.FC = () => {
                 className={classes.itemText}
                 variant="body2"
               >
-                {user.mobile_number}
+                {user.mobile}
               </Typography>
             </Grid>
             <Grid

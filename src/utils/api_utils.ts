@@ -1,7 +1,8 @@
 import axios from "axios";
 import { memberType } from "./types";
 
-const API_ROOT = "https://hisbe-production.up.railway.app/api/";
+const API_ROOT = "https://web-production-962f9.up.railway.app/api/";
+// const API_ROOT = "https://hisbe-production.up.railway.app/api/";
 // const API_ROOT = "http://127.0.0.1:8000/api/";
 export const loginUser = async (cred: { email: string; password: string }) => {
   console.log("Login______");
@@ -23,18 +24,25 @@ export const registerUser = async (cred: {
 };
 
 export const addPeople = async (member: memberType) => {
-  return await axios.post(API_ROOT + "people/add/", member);
+  return await axios.post(API_ROOT + "member/", member);
 };
 
 export const getMembers = async () => {
-  return await axios.get(API_ROOT + "people/");
+  return await axios.get(API_ROOT + "member/");
 };
 
 export const updateMemberData = async (member: memberType) => {
   return await axios.put(
-    API_ROOT + "people/update/" + member.register_number + "/",
+    API_ROOT + "member/" + member.register_number + "/",
     member
   );
+};
+
+export const getHouseNames = async () => {
+  return await axios.get(API_ROOT + "house-names/");
+};
+export const getAreaNames = async () => {
+  return await axios.get(API_ROOT + "areas/");
 };
 
 export const setToken = (token: string) => {

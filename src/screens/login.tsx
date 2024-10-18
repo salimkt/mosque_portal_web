@@ -1,13 +1,24 @@
 import { useState } from "react";
-import { TextField, Button, Container, Box } from "@mui/material";
+import {
+  TextField,
+  Button,
+  Container,
+  Box,
+  CircularProgress,
+} from "@mui/material";
 import { ThemeProvider } from "@mui/material/styles";
 import { theme, useStyles } from "../utils/styles";
 import { useNavigate } from "react-router-dom";
-import { getMembers, loginUser, setToken } from "../utils/api_utils";
-import { useAppDispatch } from "../toolkit/store";
+import {
+  getAreaNames,
+  getHouseNames,
+  getMembers,
+  loginUser,
+  setToken,
+} from "../utils/api_utils";
+import { store, useAppDispatch } from "../toolkit/store";
 import * as actions from "../toolkit/reducers";
 import { memberType } from "../utils/types";
-import { getHouseNames } from "../utils/functions";
 
 export const Login = () => {
   const classes = useStyles();
@@ -18,6 +29,7 @@ export const Login = () => {
     password: "",
   });
   const [isError, setIsError] = useState(false);
+  const [loading, setLoading] = useState(false);
   const handleChange = (e: { target: { name: any; value: any } }) => {
     isError && setIsError(false);
     setFormData({
@@ -29,19 +41,27 @@ export const Login = () => {
   const handleSubmit = (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log("Form Data:", formData);
+    setLoading(true);
     loginUser(formData)
       .then((res) => {
-        console.log(res);
-        navigate("/dashboard");
         localStorage.setItem("authToken", res.data.access);
         setToken(res.data.access);
-        // getMembers().then((res) => {
-        //   dispatch(actions.setMembers(res.data));
-        //   dispatch(actions.setHouseNames(getHouseNames(res.data)));
-        // });
+        getMembers().then((res) => {
+          dispatch(actions.setMembers(res.data));
+          setLoading(false);
+          console.log(res);
+          navigate("/dashboard");
+          getHouseNames().then((res) => {
+            store.dispatch(actions.setHouseNames(res.data));
+          });
+          getAreaNames().then((res) => {
+            store.dispatch(actions.setAreaNames(res.data));
+          });
+        });
       })
       .catch((er) => {
         console.log("errr", er);
+        setLoading(false);
         dispatch(
           actions.setAlert({
             visible: true,
@@ -52,6 +72,7 @@ export const Login = () => {
         setIsError(true);
       })
       .finally(() => {
+        // setLoading(false);
         console.log("errr");
       });
   };
@@ -96,9 +117,13 @@ export const Login = () => {
               style={styles.textInput}
               fullWidth
             >
-              Login
+              {loading ? (
+                <CircularProgress size={24} color={"info"} />
+              ) : (
+                "Login"
+              )}
             </Button>
-            <text style={styles.or}>- OR -</text>
+            {/* <text style={styles.or}>- OR -</text>
             <Button
               className={classes.submitButton}
               type="button"
@@ -109,7 +134,7 @@ export const Login = () => {
               fullWidth
             >
               <text style={styles.logintext}>SignUp</text>
-            </Button>
+            </Button> */}
           </form>
         </Box>
       </Container>
@@ -139,5 +164,13 @@ const styles = {
     backgroundColor: "#fff",
     borderWidth: 1.5,
     borderColor: "#076324",
+  },
+  spinner: {
+    color: "#fff",
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    marginTop: -12, // Adjust for spinner size (24px)
+    marginLeft: -12,
   },
 };
