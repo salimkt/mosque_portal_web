@@ -12,9 +12,9 @@ import {
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/system";
+import { API_ROOT } from "../utils/api_utils";
 
 // Replace with your own API root URL
-const BE_API_ROOT = "https://web-production-962f9.up.railway.app";
 
 const bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"];
 const relationshipChoices = [
@@ -75,12 +75,9 @@ const CreateDependent: React.FC = () => {
     const fetchMembers = async () => {
       setLoadingMembers(true);
       try {
-        const response = await axios.get<Member[]>(
-          BE_API_ROOT + "/api/member/",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const response = await axios.get<Member[]>(API_ROOT + "/api/member/", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMembers(response.data);
       } catch (error) {
         console.error("Error fetching members:", error);
@@ -106,7 +103,7 @@ const CreateDependent: React.FC = () => {
     setLoading(true);
 
     try {
-      const response = await axios.post(BE_API_ROOT + "/api/dpnd/", dependent, {
+      const response = await axios.post(API_ROOT + "/api/dpnd/", dependent, {
         headers: { Authorization: `Bearer ${token}` },
       });
       console.log("Dependent created successfully:", response.data);

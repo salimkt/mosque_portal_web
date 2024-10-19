@@ -18,7 +18,7 @@ import { theme } from "../utils/styles";
 import { store, useAppDispatch, useAppSelector } from "../toolkit/store";
 import { addPeople, updateMemberData } from "../utils/api_utils";
 import { useNavigate } from "react-router-dom";
-import { isStringLiteral } from "typescript";
+
 const useStyles = makeStyles((theme: any) => ({
   formContainer: {
     width: "100%",

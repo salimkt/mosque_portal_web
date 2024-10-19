@@ -15,6 +15,7 @@ import { Dashboard } from "../screens/dashbord";
 import { UserForm } from "../screens/user_form";
 import CardGrid from "../screens/cards";
 import CreateDependent from "../screens/dependents";
+import { MemberView } from "../screens/member_view";
 // import { Home } from "../App";
 // const SignUp = React.lazy(() => import("../screens/signup"))
 
@@ -46,6 +47,10 @@ const router = createHashRouter([
       {
         path: "/create-dep",
         element: <CreateDependent />,
+      },
+      {
+        path: "/member-view",
+        element: <MemberView />,
       },
     ],
   },

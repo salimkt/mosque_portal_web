@@ -21,7 +21,18 @@ const initialstate = {
     area: 0,
     blood_group: "",
   },
-  house_names: [""],
+  memberdata: {
+    register_number: "",
+    name: "",
+    mobile: "",
+    dob: "",
+    father: "",
+    house: 0,
+    area: 0,
+    blood_group: "",
+    dependents: [],
+  },
+  house_names: [],
   area_names: [""],
 };
 
@@ -49,12 +60,21 @@ export const MainSlice = createSlice({
       state: typeof initialstate,
       action: PayloadAction<memberType>
     ) => {
+      //@ts-ignore
       state.formdata = action.payload;
+    },
+    setMemberata: (
+      state: typeof initialstate,
+      action: PayloadAction<memberType>
+    ) => {
+      //@ts-ignore
+      state.memberdata = action.payload;
     },
     setHouseNames: (
       state: typeof initialstate,
-      action: PayloadAction<string[]>
+      action: PayloadAction<{ id: number; name: string }[]>
     ) => {
+      //@ts-ignore
       state.house_names = action.payload;
     },
     setAreaNames: (
@@ -69,6 +89,7 @@ export const {
   setAlert,
   setMembers,
   setFormData,
+  setMemberata,
   setHouseNames,
   setAreaNames,
 } = MainSlice.actions;

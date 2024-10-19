@@ -3,6 +3,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 const initialstate = {
   scanning: false,
   editing: false,
+  parent: undefined,
 };
 
 export const FlagSlice = createSlice({
@@ -20,6 +21,13 @@ export const FlagSlice = createSlice({
       action: PayloadAction<boolean>
     ) => {
       state.editing = action.payload;
+    },
+    setParent: (
+      state: typeof initialstate,
+      action: PayloadAction<number | undefined>
+    ) => {
+      //@ts-ignore
+      state.parent = action.payload;
     },
   },
 });
